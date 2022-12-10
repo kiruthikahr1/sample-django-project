@@ -1,14 +1,36 @@
+---
 version: 1.0
 configuration:
   has_webserver: true
+  readonly_paths:
+    - app/tests.py
+    - app/views.py
+    - app/models.py
+    - app/services.py
+    - manage.py
   scoring:
-    command: "rm -rf unit.xml; pip install --user -r requirements.txt && python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py test"
+    command: rm -rf unit.xml && pip3 install -r requirements.txt && python3 manage.py test
     files:
       - unit.xml
+    testcase_weights:
+      test_view_with_existing_order: 0.01
+      test_view_with_non_existing_order: 0.09
+      test_dispatch_with_new_order: 0.01
+      test_dispatch_with_delivered_order: 0.1
+      test_dispatch_with_dispatched_order: 0.1
+      test_dispatch_with_non_existing_order: 0.09
+      test_pay_with_dispatched_order: 0.01
+      test_pay_with_dispatched_and_already_paid_order: 0.1
+      test_pay_with_dispatched_order_and_non_integer_amount: 0.1
+      test_pay_with_dispatched_order_and_not_matching_amount: 0.1
+      test_pay_with_delivered_order: 0.1
+      test_pay_with_new_order: 0.1
+      test_pay_with_non_existing_order: 0.09
   ide_config:
     default_open_files:
-      - SUB_MODULE/models.py
+      - project/settings.py
+      - app/exceptions.py
     project_menu:
-      run: python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py runserver 0.0.0.0:8000
-      install: pip install --user -r requirements.txt
-      test: rm -rf unit.xml; python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py test --keepdb
+      run: pip3 install -r requirements.txt && python3 manage.py makemigrations && python3 manage.py migrate --run-syncdb && python3 manage.py runserver 0.0.0.0:8000
+      install: pip3 install -r requirements.txt
+      test: rm -rf unit.xml && pip3 install -r requirements.txt && python3 manage.py test

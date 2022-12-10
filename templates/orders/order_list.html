@@ -1,0 +1,31 @@
+{% block content %}
+<h2>Orders</h2>
+<ul>
+    <table border="1">
+        <thead>
+        <tr>
+            <td>Order ID</td>
+            <td>Status</td>
+            <td>Amount</td>
+            <td>Payment</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in object_list %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.amount }}</td>
+            <td>{{ order.payment.amount }}</td>
+            <td>
+                <a href="/orders/{{ order.id }}">View</a>
+                <a href="/orders/{{ order.id }}/dispatch">Dispatch</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</ul>
+{% endblock %}

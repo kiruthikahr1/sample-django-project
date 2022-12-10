@@ -1,0 +1,31 @@
+{% block content %}
+<h2>Orders Detail</h2>
+<form action="/orders/{{ order.id }}/pay" method="POST">
+    {% csrf_token %}
+    <div>
+        <label>Order ID</label>
+        <input type="text" value="{{ order.id }}" readonly="readonly"/>
+    </div>
+    <div>
+        <label>Delivery Name</label>
+        <input type="text" value="{{ order.delivery_name }}" readonly="readonly"/>
+    </div>
+    <div>
+        <label>Delivery Address</label>
+        <input type="text" value="{{ order.delivery_address }}" readonly="readonly"/>
+    </div>
+    <div>
+        <label>Status</label>
+        <input type="text" value="{{ order.status }}" readonly="readonly"/>
+    </div>
+    <div>
+        <label>Order Amount</label>
+        <input type="text" value="{{ order.amount }}" readonly="readonly"/>
+    </div>
+    <div>
+        <label>Payment</label>
+        <input type="text" name="amount"/>
+        <button type="submit">Pay</button>
+    </div>
+</form>
+{% endblock %}
